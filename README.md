@@ -77,3 +77,20 @@ process.stdin.on('data', data => {
   pipeline.process(data);
 });
 ```
+
+### Installation
+
+Run the below command to install using NPM
+
+```
+npm install --save event-stream-integers
+```
+
+## Usage
+
+Operations in a pipeline must be part of the class.
+In order to use new methods, you need to extend class.
+
+```javascript
+var pipeline = require('event-stream-integers');
+```

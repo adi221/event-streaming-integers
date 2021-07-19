@@ -7,8 +7,12 @@
     "start": "node index.js",
     "test": "jest"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adi221/event-streaming-integers"
+  },
   "keywords": [],
-  "author": "",
+  "author": "Adi",
   "license": "ISC",
   "devDependencies": {
     "jest": "^27.0.6"

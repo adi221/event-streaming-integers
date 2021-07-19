@@ -22,3 +22,6 @@ process.stdin.resume();
 process.stdin.on('data', data => {
   pipeline.process(data);
 });
+
+// For npm
+module.exports = Pipeline;
