@@ -5,7 +5,7 @@ const Pipeline = require('./classes/Pipeline');
 
 const pipeline = new Pipeline();
 
-// The reason I call the functions is because they return another function (closure)
+// The reason I call the functions inside the pipeline is because they return another function (closure)
 // that contains the piece of data that is retrieved from the pipeline and can't be given in this context.
 pipeline
   .pipe(pipeline.stdinSource)

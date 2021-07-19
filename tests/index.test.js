@@ -183,4 +183,62 @@ describe('exercise tests', () => {
       expect(stringifiedLogs.includes('ANSWER: -40')).toBe(true);
     });
   });
+
+  describe('fifth pipeline', () => {
+    beforeEach(() => {
+      pipeline.pipe(pipeline.stdinSource).pipe(pipeline.fileSink());
+    });
+
+    test('should log `ANSWER: 1`', () => {
+      [1].forEach(num => pipeline.process(num));
+      const stringifiedLogs = JSON.stringify(console.log.mock.calls);
+      expect(stringifiedLogs.includes('ANSWER: 1')).toBe(true);
+    });
+  });
+
+  describe('sixth pipeline', () => {
+    beforeEach(() => {
+      pipeline
+        .pipe(pipeline.stdinSource)
+        .pipe(pipeline.foldSum())
+        .pipe(pipeline.fileSink());
+    });
+
+    test('should log `ANSWER: 1`', () => {
+      [1].forEach(num => pipeline.process(num));
+      const stringifiedLogs = JSON.stringify(console.log.mock.calls);
+      expect(stringifiedLogs.includes('ANSWER: 1')).toBe(true);
+    });
+  });
+
+  describe('seventh pipeline', () => {
+    beforeEach(() => {
+      pipeline
+        .pipe(pipeline.stdinSource)
+        .pipe(pipeline.foldMedian())
+        .pipe(pipeline.fileSink());
+    });
+
+    test('should log `ANSWER: 1`', () => {
+      [1].forEach(num => pipeline.process(num));
+      const stringifiedLogs = JSON.stringify(console.log.mock.calls);
+      expect(stringifiedLogs.includes('ANSWER: 1')).toBe(true);
+    });
+  });
+
+  describe('eighth pipeline', () => {
+    beforeEach(() => {
+      pipeline
+        .pipe(pipeline.stdinSource)
+        .pipe(pipeline.filterFunction(x => x > 0))
+        .pipe(pipeline.foldMedian())
+        .pipe(pipeline.fileSink());
+    });
+
+    test('should log `ANSWER: 10`', () => {
+      [-1, 10].forEach(num => pipeline.process(num));
+      const stringifiedLogs = JSON.stringify(console.log.mock.calls);
+      expect(stringifiedLogs.includes('ANSWER: 10')).toBe(true);
+    });
+  });
 });
