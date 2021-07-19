@@ -83,7 +83,7 @@ process.stdin.on('data', data => {
 Run the below command to install using NPM
 
 ```
-npm install --save event-stream-integers
+npm install --save event-stream-integers-js
 ```
 
 ## Usage
@@ -92,5 +92,6 @@ Operations in a pipeline must be part of the class.
 In order to use new methods, you need to extend class.
 
 ```javascript
-var pipeline = require('event-stream-integers');
+const Pipeline = require('event-stream-integers-js');
+cosnt pipeline = new Pipeline();
 ```

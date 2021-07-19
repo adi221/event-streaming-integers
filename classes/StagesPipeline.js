@@ -5,7 +5,8 @@
  * @constructor
  * stages = stages in the pipeline
  * currentFuncReturn = track the return value of the functions in pipeline
- * currentStage = current index in the stages array
+ * currentStage = current last index in the stages array (i.e index that retains the last stage so far - to avoid staying in the same fixedEventWindow array)
+ * followerStage = current index in stages array
  */
 class StagesPipeline {
   constructor(presetStages) {
@@ -16,7 +17,7 @@ class StagesPipeline {
   }
 
   /**
-   * Adds a new stage. Stage can be a function or some literal value. In case
+   * pipe - adds a new stage. Stage can be a function or some literal value. In case
    * of literal values. That specified value will be passed to the next stage and the
    * output from last stage gets ignored
    *
@@ -28,7 +29,12 @@ class StagesPipeline {
     return this;
   }
 
-  waitForStage() {
+  /**
+   * _waitForStage - function to call the methods inside the stages and track the
+   * current function to call and what it returns so we can pass it to the next
+   * function in the stages pipeline
+   */
+  _waitForStage() {
     while (this.followerStage < this.stages.length) {
       const funcReturn = this.stages[this.followerStage](
         this.currentFuncReturn
@@ -52,9 +58,6 @@ class StagesPipeline {
     // Restore the values so we can start a new pipeline
     this.followerStage = 0;
     this.currentStage = 0;
-    let answer = this.currentFuncReturn;
-    this.currentFuncReturn = null;
-    return answer;
   }
 
   /**
@@ -64,7 +67,7 @@ class StagesPipeline {
   process(initialValue) {
     if (this.stages.length === 0 || initialValue === undefined) return null;
     this.currentFuncReturn = initialValue;
-    this.waitForStage();
+    this._waitForStage();
   }
 }
 
