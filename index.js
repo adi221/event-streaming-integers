@@ -1,7 +1,7 @@
 // Assume that task is not CPU intensive- if so, clustering or
 // thread pool can be taken into account.
 
-const Pipeline = require('./Pipeline');
+const Pipeline = require('./classes/Pipeline');
 
 const pipeline = new Pipeline();
 

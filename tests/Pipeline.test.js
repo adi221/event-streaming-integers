@@ -1,4 +1,4 @@
-const Pipeline = require('../Pipeline');
+const Pipeline = require('../classes/Pipeline');
 
 test('should return initial variables of a constructor', () => {
   const pipeline = new Pipeline();

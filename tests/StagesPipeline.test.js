@@ -1,4 +1,4 @@
-const StagesPipeline = require('../StagesPipeline');
+const StagesPipeline = require('../classes/StagesPipeline');
 
 test('should return initial variables of a constructor', () => {
   const stagesPipeline = new StagesPipeline();

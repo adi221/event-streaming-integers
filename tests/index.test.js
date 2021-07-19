@@ -1,4 +1,4 @@
-const Pipeline = require('../Pipeline');
+const Pipeline = require('../classes/Pipeline');
 
 describe('exercise tests', () => {
   let pipeline;
