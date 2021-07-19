@@ -1,11 +1,11 @@
 // Assume that task is not CPU intensive- if so, clustering or
 // thread pool can be taken into account.
 
-// Reason for express - allow the small framework to have generic stdin stdout values
+// Reason for express - allow the small framework to have generic stdin stdout streams = requests and responses
 
 const express = require('express');
 const Pipeline = require('./classes/Pipeline');
-const pipelineRouter = require('./routers/pipelineRouters');
+const { pipelineRouter } = require('./routers/pipelineRouter');
 
 const app = express();
 app.use(express.json());
@@ -29,7 +29,6 @@ process.stdin.setEncoding('utf8');
 process.stdin.resume();
 
 process.stdin.on('data', data => {
-  console.log(data, 'DATA');
   pipeline.process(data);
 });
 

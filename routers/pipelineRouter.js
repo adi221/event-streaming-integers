@@ -1,14 +1,15 @@
 const express = require('express');
-const router = express.Router();
+const pipelineRouter = express.Router();
 
-router.post('/send-pipeline', (req, res) => {
+// @desc Send an input to the pipeline
+// @route POST /send-pipeline
+// @access Public
+const sendInput = (req, res) => {
   try {
     let { input } = req.body;
 
-    JSON.parse(JSON.stringify(input));
-
     if (!input || !typeof input === 'string') {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: 'Invalid input. Enter either a string or an array of numbers.',
       });
@@ -20,7 +21,7 @@ router.post('/send-pipeline', (req, res) => {
       pipeline.process(val);
     });
 
-    res.json({
+    return res.status(200).json({
       success: true,
       message:
         'Values were passed to the pipeline, look at the console for the output :)',
@@ -28,6 +29,8 @@ router.post('/send-pipeline', (req, res) => {
   } catch (error) {
     console.error(error);
   }
-});
+};
 
-module.exports = router;
+pipelineRouter.post('/send-pipeline', sendInput);
+
+module.exports = { pipelineRouter, sendInput };

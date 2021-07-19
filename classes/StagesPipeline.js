@@ -17,11 +17,8 @@ class StagesPipeline {
   }
 
   /**
-   * pipe - adds a new stage. Stage can be a function or some literal value. In case
-   * of literal values. That specified value will be passed to the next stage and the
-   * output from last stage gets ignored
-   *
-   * @param stage
+   * pipe - adds a new stage. Stage is a function (method) of the child class.
+   * @param {function} stage
    * @returns {Pipeline}
    */
   pipe(stage) {
