@@ -12,6 +12,7 @@ class StagesPipeline {
     this.stages = presetStages || [];
     this.currentFuncReturn = null;
     this.currentStage = 0;
+    this.followerStage = 0;
   }
 
   /**
@@ -27,30 +28,33 @@ class StagesPipeline {
     return this;
   }
 
-  // *waitForStage() {
-  //   while (this.currentStage < this.stages.length) {
-  //     const funcReturn = this.stages[this.currentStage](this.currentFuncReturn);
-  //     // it means that the filterArr is empty or fixedArr is not full yet
-  //     // so wait for next inputs
-  //     if (funcReturn === undefined) return;
-  //     this.currentStage++;
-  //     if (this.currentStage === this.stages.length - 1) {
-  //       this.currentStage === 0;
-  //     }
-  //     yield funcReturn;
-  //   }
-  // }
-
   waitForStage() {
-    while (true) {
-      const index = this.currentStage % this.stages.length;
-      const funcReturn = this.stages[index](this.currentFuncReturn);
+    while (this.followerStage < this.stages.length) {
+      const funcReturn = this.stages[this.followerStage](
+        this.currentFuncReturn
+      );
       // it means that the filterArr is empty or fixedArr is not full yet
-      // so wait for next inputs
-      if (funcReturn === undefined) return;
+      // so we are done with current input
+      if (funcReturn === undefined) {
+        this.currentStage = Math.max(this.currentStage, this.followerStage);
+        this.followerStage = 0;
+        return;
+      }
+
       this.currentFuncReturn = funcReturn;
-      this.currentStage++;
+      this.followerStage++;
+      // Increase currentStage only when follower is one step ahead
+      if (this.followerStage > this.currentStage) {
+        this.currentStage = this.followerStage;
+      }
     }
+
+    // Restore the values so we can start a new pipeline
+    this.followerStage = 0;
+    this.currentStage = 0;
+    let answer = this.currentFuncReturn;
+    this.currentFuncReturn = null;
+    return answer;
   }
 
   /**
@@ -62,19 +66,6 @@ class StagesPipeline {
     this.currentFuncReturn = initialValue;
     this.waitForStage();
   }
-  // process(initialValue) {
-  //   if (this.stages.length === 0 || initialValue === undefined) return null;
-  //   this.currentFuncReturn = initialValue;
-  //   const generatorFunc = this.waitForStage();
-
-  //   let done = false;
-  //   while (!done) {
-  //     let currentNext = generatorFunc.next();
-  //     // console.log('Current next:', currentNext);
-  //     this.currentFuncReturn = currentNext.value;
-  //     done = currentNext.done;
-  //   }
-  // }
 }
 
 module.exports = StagesPipeline;

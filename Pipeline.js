@@ -46,6 +46,9 @@ class Pipeline extends StagesPipeline {
    */
   fixedEventWindow(windowSize) {
     return number => {
+      // It means we have been through this window so continue
+      if (this.followerStage < this.currentStage) return number;
+
       number = +number;
       this.fixedArr.push(number);
       if (this.fixedArr.length === windowSize) {
@@ -62,6 +65,7 @@ class Pipeline extends StagesPipeline {
    */
   foldSum() {
     return numbers => {
+      if (typeof numbers === 'number') return numbers;
       return numbers.reduce((acc, num) => acc + num, 0);
     };
   }
@@ -72,7 +76,7 @@ class Pipeline extends StagesPipeline {
    */
   foldMedian() {
     return arr => {
-      console.log({ arr, len: arr.length });
+      if (typeof arr === 'number') return arr;
       if (arr.length === 0) return 0;
       arr.sort((a, b) => a - b);
       const middle = Math.floor(arr.length / 2);
@@ -91,7 +95,7 @@ class Pipeline extends StagesPipeline {
    */
   fileSink() {
     return val => {
-      console.log('ANSWER:', val);
+      console.log(`ANSWER: ${val}`);
       return val;
     };
   }

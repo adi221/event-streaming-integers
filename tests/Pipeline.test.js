@@ -1,5 +1,4 @@
 const Pipeline = require('../Pipeline');
-const StagesPipeline = require('../StagesPipeline');
 
 test('should return initial variables of a constructor', () => {
   const pipeline = new Pipeline();
@@ -7,6 +6,7 @@ test('should return initial variables of a constructor', () => {
   expect(pipeline.stages).toEqual([]);
   expect(pipeline.currentFuncReturn).toEqual(null);
   expect(pipeline.currentStage).toEqual(0);
+  expect(pipeline.followerStage).toEqual(0);
 });
 
 describe('function methods', () => {
