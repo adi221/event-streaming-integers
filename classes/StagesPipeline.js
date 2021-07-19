@@ -62,7 +62,7 @@ class StagesPipeline {
 
   /**
    * process - starts the pipeline
-   * @param {string} initialValue user input to pass to the first function
+   * @param {string} initialValue user`s input to pass to the first function
    */
   process(initialValue) {
     if (this.stages.length === 0 || initialValue === undefined) return null;
