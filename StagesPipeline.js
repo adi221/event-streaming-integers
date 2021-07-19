@@ -42,16 +42,14 @@ class StagesPipeline {
   // }
 
   waitForStage() {
-    while (this.currentStage < this.stages.length) {
-      const funcReturn = this.stages[this.currentStage](this.currentFuncReturn);
+    while (true) {
+      const index = this.currentStage % this.stages.length;
+      const funcReturn = this.stages[index](this.currentFuncReturn);
       // it means that the filterArr is empty or fixedArr is not full yet
       // so wait for next inputs
       if (funcReturn === undefined) return;
       this.currentFuncReturn = funcReturn;
       this.currentStage++;
-      if (this.currentStage === this.stages.length) {
-        this.currentStage === 0;
-      }
     }
   }
 

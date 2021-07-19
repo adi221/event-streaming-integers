@@ -29,9 +29,8 @@ class Pipeline extends StagesPipeline {
   /**
    * filterFunction - checks if the number matches a predicate based on
    * the given predicate in the initilization time.
-   * @param {array} arr the user's integers input
    * @param {function} predicate the predicate function to check condition
-   * return {boolean} true or false
+   * @returns {(number) => number | undefined} returns a closure that returns whether the number matches the predicate
    */
   filterFunction(predicate) {
     return num => {
@@ -42,9 +41,8 @@ class Pipeline extends StagesPipeline {
 
   /**
    * fixedEventWindow - passes an array with a fixed length
-   * @param {*} numbers
-   * @param {numbers} windowSize max size of the array
-   * @returns {number[]} array of windowSize's length
+   * @param {number} windowSize max size of the array
+   * @returns {(number) => array | undefined} returns a closure that returns the fixed array
    */
   fixedEventWindow(windowSize) {
     return number => {
@@ -53,7 +51,6 @@ class Pipeline extends StagesPipeline {
       if (this.fixedArr.length === windowSize) {
         const res = [...this.fixedArr];
         this.fixedArr.length = 0;
-        this.removeStage();
         return res;
       }
     };
@@ -61,8 +58,7 @@ class Pipeline extends StagesPipeline {
 
   /**
    * foldSum - calculates the sum of the numbers of the array
-   * @param {number[]} numbers array of numbers
-   * @returns {number} sum of the numbers in the array
+   * @returns {(number[]) => number} returns a closure that returns the fold sum
    */
   foldSum() {
     return numbers => {
@@ -72,8 +68,7 @@ class Pipeline extends StagesPipeline {
 
   /**
    * foldMedian - return the median value for an array of numbers
-   * @param {number[]} arr arr of numbers
-   * @returns {number} the median
+   * @returns {(number[]) => number} returns a closure that returns the median
    */
   foldMedian() {
     return arr => {
@@ -91,8 +86,8 @@ class Pipeline extends StagesPipeline {
   }
 
   /**
-   * fileSink - logs the number
-   * @param {number} val
+   * fileSink - logs the number result
+   * @returns {number => number} returns a closure that returns the number
    */
   fileSink() {
     return val => {
