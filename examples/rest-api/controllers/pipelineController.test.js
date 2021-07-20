@@ -1,4 +1,4 @@
-const { sendInput } = require('./pipelineRouter');
+const { sendInput } = require('./pipelineController');
 
 const mockResponse = () => {
   const res = {};

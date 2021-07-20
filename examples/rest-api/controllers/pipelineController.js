@@ -1,10 +1,7 @@
-const express = require('express');
-const pipelineRouter = express.Router();
-
 // @desc Send an input to the pipeline
 // @route POST /send-pipeline
 // @access Public
-const sendInput = (req, res) => {
+exports.sendInput = (req, res) => {
   try {
     let { input } = req.body;
 
@@ -30,7 +27,3 @@ const sendInput = (req, res) => {
     console.error(error);
   }
 };
-
-pipelineRouter.post('/send-pipeline', sendInput);
-
-module.exports = { pipelineRouter, sendInput };

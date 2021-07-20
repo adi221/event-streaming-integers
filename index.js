@@ -5,31 +5,19 @@
 
 const express = require('express');
 const Pipeline = require('./classes/Pipeline');
-const { pipelineRouter } = require('./routers/pipelineRouter');
+const pipelineRouter = require('./examples/rest-api/routers/pipelineRouter');
+const examplePipeline = require('./examples/cli-monitor/index');
 
 const app = express();
 app.use(express.json());
 const PORT = 5000;
 app.use('/', pipelineRouter);
 
-const pipeline = new Pipeline();
-
-// The reason I call the functions inside the pipeline is because they return another function (closure)
-// that contains the piece of data that is retrieved from the pipeline and can't be given in this context.
-pipeline
-  .pipe(pipeline.stdinSource)
-  .pipe(pipeline.filterFunction(x => x >= 0))
-  .pipe(pipeline.fixedEventWindow(2))
-  .pipe(pipeline.foldSum())
-  .pipe(pipeline.fixedEventWindow(3))
-  .pipe(pipeline.foldMedian())
-  .pipe(pipeline.fileSink());
-
 process.stdin.setEncoding('utf8');
 process.stdin.resume();
 
 process.stdin.on('data', data => {
-  pipeline.process(data);
+  examplePipeline.process(data);
 });
 
 app.get('/', (req, res) => {
@@ -37,7 +25,7 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, console.log(`Server listening on PORT ${PORT}`));
-app.set('pipeline', pipeline);
+app.set('pipeline', examplePipeline);
 
 // For npm
 module.exports = Pipeline;
