@@ -5,6 +5,7 @@
 
 const express = require('express');
 const Pipeline = require('./classes/Pipeline');
+
 const pipelineRouter = require('./examples/rest-api/routers/pipelineRouter');
 const examplePipeline = require('./examples/cli-monitor/index');
 
